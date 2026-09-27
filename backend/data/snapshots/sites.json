@@ -1,0 +1,122 @@
+[
+  {
+    "id": "PT-COI-01",
+    "code": "PT-COI-01",
+    "name": "Ribeira de Coselhas",
+    "city": "Coimbra",
+    "country": "Portugal",
+    "stream_name": "Coselhas",
+    "latitude": 40.2251,
+    "longitude": -8.4312,
+    "altitude_m": 45.0,
+    "catchment_area_km2": 18.4,
+    "is_hero": true,
+    "description": "Urban-impacted stream segment with altered riparian buffer and intermittent industrial runoff from industrial park upstream.",
+    "source": "OAH",
+    "source_id": "SITE_COIMBRA_01",
+    "source_endpoint": "/sites/PT-COI-01",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "pilot": "Coimbra",
+      "hydrological_basin": "Mondego",
+      "monitoring_frequency": "weekly",
+      "primary_pressures": ["riparian_degradation", "urban_runoff", "eutrophication"]
+    }
+  },
+  {
+    "id": "PT-LIS-02",
+    "code": "PT-LIS-02",
+    "name": "Rio Trancão Lower Reach",
+    "city": "Lisbon",
+    "country": "Portugal",
+    "stream_name": "Trancão",
+    "latitude": 38.7954,
+    "longitude": -9.0963,
+    "altitude_m": 12.0,
+    "catchment_area_km2": 86.2,
+    "is_hero": false,
+    "description": "High-density urban stream discharging into Tagus Estuary. Historical heavy-metal contamination and recent re-naturalization efforts.",
+    "source": "OAH",
+    "source_id": "SITE_LISBON_02",
+    "source_endpoint": "/sites/PT-LIS-02",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "pilot": "Lisbon",
+      "hydrological_basin": "Tagus",
+      "monitoring_frequency": "biweekly",
+      "primary_pressures": ["stormwater_overflow", "heavy_metals", "sedimentation"]
+    }
+  },
+  {
+    "id": "BE-GNT-03",
+    "code": "BE-GNT-03",
+    "name": "Lieve Canal - Rabot",
+    "city": "Ghent",
+    "country": "Belgium",
+    "stream_name": "Lieve",
+    "latitude": 51.0583,
+    "longitude": 3.7147,
+    "altitude_m": 8.5,
+    "catchment_area_km2": 32.1,
+    "is_hero": false,
+    "description": "Engineered urban canal with floating wetlands and historical sediment contamination.",
+    "source": "OAH",
+    "source_id": "SITE_GHENT_03",
+    "source_endpoint": "/sites/BE-GNT-03",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "pilot": "Ghent",
+      "hydrological_basin": "Scheldt",
+      "monitoring_frequency": "weekly",
+      "primary_pressures": ["engineered_banks", "organic_load", "stagnation"]
+    }
+  },
+  {
+    "id": "FR-TLS-04",
+    "code": "FR-TLS-04",
+    "name": "Le Touch - Blagnac",
+    "city": "Toulouse",
+    "country": "France",
+    "stream_name": "Touch",
+    "latitude": 43.6358,
+    "longitude": 1.3912,
+    "altitude_m": 138.0,
+    "catchment_area_km2": 515.0,
+    "is_hero": false,
+    "description": "Suburban tributary of Garonne undergoing intense agricultural-to-urban transition and temperature anomalies.",
+    "source": "OAH",
+    "source_id": "SITE_TOULOUSE_04",
+    "source_endpoint": "/sites/FR-TLS-04",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "pilot": "Toulouse",
+      "hydrological_basin": "Garonne",
+      "monitoring_frequency": "monthly",
+      "primary_pressures": ["thermal_pollution", "nitrate_runoff", "flow_reduction"]
+    }
+  },
+  {
+    "id": "IT-BRS-05",
+    "code": "IT-BRS-05",
+    "name": "Torrente Garza",
+    "city": "Brescia",
+    "country": "Italy",
+    "stream_name": "Garza",
+    "latitude": 45.5416,
+    "longitude": 10.2118,
+    "altitude_m": 149.0,
+    "catchment_area_km2": 95.4,
+    "is_hero": false,
+    "description": "Culverted and canalized stream crossing industrial northern Italy with intermittent flow and chemical runoff.",
+    "source": "OAH",
+    "source_id": "SITE_BRESCIA_05",
+    "source_endpoint": "/sites/IT-BRS-05",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "pilot": "Brescia",
+      "hydrological_basin": "Po",
+      "monitoring_frequency": "biweekly",
+      "primary_pressures": ["culverting", "industrial_discharge", "microplastics"]
+    }
+  }
+]

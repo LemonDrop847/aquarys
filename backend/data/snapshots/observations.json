@@ -1,0 +1,157 @@
+[
+  {
+    "id": "OBS-COI-001",
+    "site_id": "PT-COI-01",
+    "observer_id": "CIT-PT-882",
+    "observed_at": "2026-09-18T14:30:00Z",
+    "latitude": 40.2254,
+    "longitude": -8.4310,
+    "category": "pollution",
+    "description": "Noticeable grey foam accumulation near bridge pillar with chemical/hydrocarbon odor.",
+    "severity": "high",
+    "images": [
+      {
+        "url": "https://storage.aquarys.eu/photos/coi-001-foam.jpg",
+        "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "has_gps_exif": true,
+        "gps_latitude": 40.22539,
+        "gps_longitude": -8.43102,
+        "timestamp_exif": "2026-09-18T14:28:45Z"
+      }
+    ],
+    "source": "OAH",
+    "source_id": "OBS_COI_10091",
+    "source_endpoint": "/observations/OBS-COI-001",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "stream_flow_visual": "low",
+      "weather_conditions": "dry",
+      "water_color": "turbid_grey"
+    }
+  },
+  {
+    "id": "OBS-COI-002",
+    "site_id": "PT-COI-01",
+    "observer_id": "EXP-PT-004",
+    "observed_at": "2026-09-18T16:00:00Z",
+    "category": "habitat",
+    "description": "Riparian canopy fragmentation index measured at 62%. Heavy bank erosion on left margin.",
+    "severity": "medium",
+    "images": [
+      {
+        "url": "https://storage.aquarys.eu/photos/coi-002-bank.jpg",
+        "hash": "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+        "has_gps_exif": true,
+        "gps_latitude": 40.22512,
+        "gps_longitude": -8.43118,
+        "timestamp_exif": "2026-09-18T15:58:12Z"
+      }
+    ],
+    "source": "OAH",
+    "source_id": "OBS_COI_10092",
+    "source_endpoint": "/observations/OBS-COI-002",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "observer_role": "field_researcher",
+      "protocol": "OAH_HABITAT_V2"
+    }
+  },
+  {
+    "id": "OBS-LIS-001",
+    "site_id": "PT-LIS-02",
+    "observer_id": "CIT-PT-311",
+    "observed_at": "2026-09-15T09:15:00Z",
+    "category": "hydromorphology",
+    "description": "Concrete channel embankment restricting natural flow; sediment buildup blocking fish migration corridor.",
+    "severity": "medium",
+    "images": [
+      {
+        "url": "https://storage.aquarys.eu/photos/lis-001-culvert.jpg",
+        "hash": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+        "has_gps_exif": true,
+        "gps_latitude": 38.7953,
+        "gps_longitude": -9.0961,
+        "timestamp_exif": "2026-09-15T09:14:02Z"
+      }
+    ],
+    "source": "OAH",
+    "source_id": "OBS_LIS_20412",
+    "source_endpoint": "/observations/OBS-LIS-001",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "channel_type": "trapezoidal_concrete"
+    }
+  },
+  {
+    "id": "OBS-GNT-001",
+    "site_id": "BE-GNT-03",
+    "observer_id": "CIT-BE-102",
+    "observed_at": "2026-09-12T11:45:00Z",
+    "category": "vegetation",
+    "description": "Proliferation of invasive floating pennywort (Hydrocotyle ranunculoides) across 40m stretch.",
+    "severity": "high",
+    "images": [
+      {
+        "url": "https://storage.aquarys.eu/photos/gnt-001-pennywort.jpg",
+        "hash": "b5a2c9b149dcdffdb0e83e3314ae6b779d6ec61e6c7dcb35f44c2250fc87be70",
+        "has_gps_exif": true,
+        "gps_latitude": 51.0582,
+        "gps_longitude": 3.7145,
+        "timestamp_exif": "2026-09-12T11:43:10Z"
+      }
+    ],
+    "source": "OAH",
+    "source_id": "OBS_GNT_30018",
+    "source_endpoint": "/observations/OBS-GNT-001",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "coverage_percentage": 75,
+      "biomass_density": "high"
+    }
+  },
+  {
+    "id": "OBS-TLS-001",
+    "site_id": "FR-TLS-04",
+    "observer_id": "CIT-FR-509",
+    "observed_at": "2026-09-10T17:00:00Z",
+    "category": "biotics",
+    "description": "Macroinvertebrate sampling: high abundance of Chironomidae, absence of Plecoptera/Trichoptera.",
+    "severity": "low",
+    "images": [],
+    "source": "OAH",
+    "source_id": "OBS_TLS_40822",
+    "source_endpoint": "/observations/OBS-TLS-001",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "bmwp_score_approx": 38,
+      "taxa_richness": 6
+    }
+  },
+  {
+    "id": "OBS-BRS-001",
+    "site_id": "IT-BRS-05",
+    "observer_id": "CIT-IT-714",
+    "observed_at": "2026-09-08T08:30:00Z",
+    "category": "pollution",
+    "description": "Oily sheen on water surface downstream of stormwater culvert, sulfur odor present.",
+    "severity": "high",
+    "images": [
+      {
+        "url": "https://storage.aquarys.eu/photos/brs-001-oil.jpg",
+        "hash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+        "has_gps_exif": true,
+        "gps_latitude": 45.5414,
+        "gps_longitude": 10.2115,
+        "timestamp_exif": "2026-09-08T08:29:10Z"
+      }
+    ],
+    "source": "OAH",
+    "source_id": "OBS_BRS_50041",
+    "source_endpoint": "/observations/OBS-BRS-001",
+    "retrieved_at": "2026-09-20T10:00:00Z",
+    "metadata": {
+      "odor_type": "sulfur_petroleum",
+      "sheen_area_m2": 120
+    }
+  }
+]
