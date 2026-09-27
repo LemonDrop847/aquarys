@@ -1,26 +1,108 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #06090e;
+    --foreground: #f1f5f9;
+    --card: #0b111a;
+    --card-foreground: #f1f5f9;
+    --popover: #0b111a;
+    --popover-foreground: #f1f5f9;
+    --primary: #06b6d4;
+    --primary-foreground: #041217;
+    --secondary: #131e2b;
+    --secondary-foreground: #94a3b8;
+    --muted: #0f1724;
+    --muted-foreground: #64748b;
+    --accent: #0ea5e9;
+    --accent-foreground: #ffffff;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: #1e293b;
+    --input: #1e293b;
+    --ring: #06b6d4;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #06090e;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* MapLibre popup & controls custom dark styling */
+.maplibregl-popup-content {
+  background-color: #0b111a !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #1e293b !important;
+  border-radius: 8px !important;
+  padding: 12px 14px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.7) !important;
+}
+
+.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+  border-bottom-color: #0b111a !important;
+}
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+  border-top-color: #0b111a !important;
+}
+.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+  border-right-color: #0b111a !important;
+}
+.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+  border-left-color: #0b111a !important;
+}
+
+.maplibregl-ctrl-group {
+  background: #0b111a !important;
+  border: 1px solid #1e293b !important;
+}
+.maplibregl-ctrl-group button {
+  border-bottom: 1px solid #1e293b !important;
+}
+
+/* React Flow custom dark theme */
+.react-flow__node {
+  border-radius: 8px;
+}
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background: #06b6d4;
+  border: 2px solid #06090e;
+}
+.react-flow__edge-path {
+  stroke: #334155;
+  stroke-width: 2;
+}
+.react-flow__controls {
+  background: #0b111a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.react-flow__controls-button {
+  background: #0b111a;
+  border-bottom: 1px solid #1e293b;
+  fill: #94a3b8;
+}
+.react-flow__controls-button:hover {
+  background: #131e2b;
+  fill: #f1f5f9;
 }
