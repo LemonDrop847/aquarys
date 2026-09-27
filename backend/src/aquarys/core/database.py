@@ -32,6 +32,15 @@ class Base(DeclarativeBase):
     pass
 
 
+async def init_db() -> None:
+    """Initialize database tables."""
+    # Import all models so metadata is populated
+    import aquarys.models  # noqa: F401
+
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """Dependency for obtaining async database session."""
     async with async_session_maker() as session:

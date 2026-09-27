@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database
+*.db
+*.db-journal
+
+# Alembic
+alembic/versions/*.py
+!alembic/versions/__init__.py
