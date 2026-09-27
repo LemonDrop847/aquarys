@@ -2,9 +2,10 @@
 
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
+
 import httpx
 from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
@@ -19,10 +20,10 @@ class OAHClient:
 
     def __init__(
         self,
-        base_url: Optional[str] = None,
-        api_key: Optional[str] = None,
+        base_url: str | None = None,
+        api_key: str | None = None,
         timeout_seconds: float = 15.0,
-        raw_storage_dir: Optional[Path] = None,
+        raw_storage_dir: Path | None = None,
     ) -> None:
         self.base_url = (base_url or settings.OAH_BASE_URL).rstrip("/")
         self.api_key = api_key or settings.OAH_API_KEY
@@ -31,7 +32,7 @@ class OAHClient:
         self.raw_dir.mkdir(parents=True, exist_ok=True)
 
     @property
-    def _headers(self) -> Dict[str, str]:
+    def _headers(self) -> dict[str, str]:
         headers = {"Accept": "application/json"}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
@@ -53,14 +54,14 @@ class OAHClient:
     def _persist_raw_payload(self, endpoint: str, data: Any, payload_hash: str) -> Path:
         """Saves raw API response to disk with timestamp and hash."""
         sanitized_endpoint = endpoint.strip("/").replace("/", "_")
-        timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
         filename = f"{sanitized_endpoint}_{timestamp}_{payload_hash[:8]}.json"
         target_path = self.raw_dir / filename
         with open(target_path, "w", encoding="utf-8") as f:
             json.dump(
                 {
                     "endpoint": endpoint,
-                    "retrieved_at": datetime.now(timezone.utc).isoformat(),
+                    "retrieved_at": datetime.now(UTC).isoformat(),
                     "payload_hash": payload_hash,
                     "data": data,
                 },
@@ -76,8 +77,8 @@ class OAHClient:
         reraise=True,
     )
     async def fetch_endpoint(
-        self, endpoint: str, params: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
+        self, endpoint: str, params: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         """Fetches a single endpoint with exponential backoff."""
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
         logger.info("Fetching OAH endpoint: %s with params %s", url, params)
@@ -94,21 +95,21 @@ class OAHClient:
                 "endpoint": endpoint,
                 "data": data,
                 "payload_hash": payload_hash,
-                "retrieved_at": datetime.now(timezone.utc),
+                "retrieved_at": datetime.now(UTC),
             }
 
     async def fetch_paginated(
         self,
         endpoint: str,
-        params: Optional[Dict[str, Any]] = None,
+        params: dict[str, Any] | None = None,
         max_pages: int = 5,
         page_size: int = 50,
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         """Paginates through an endpoint collection safely."""
-        all_items: List[Dict[str, Any]] = []
+        all_items: list[dict[str, Any]] = []
         current_params = dict(params or {})
         current_params.setdefault("limit", page_size)
-        cursor: Optional[str] = None
+        cursor: str | None = None
         page = 0
 
         while page < max_pages:

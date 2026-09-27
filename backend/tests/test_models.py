@@ -1,11 +1,13 @@
 """Test database schema creation and model operations."""
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+
 import pytest
 from sqlalchemy import select
-from aquarys.core.database import init_db, async_session_maker
-from aquarys.models import Site, Observation, StreamProfile, StreamEmbedding, Mission, MissionTask
+
+from aquarys.core.database import async_session_maker, init_db
+from aquarys.models import Observation, Site, StreamEmbedding, StreamProfile
 
 
 @pytest.mark.asyncio
@@ -42,7 +44,7 @@ async def test_database_models():
         obs = Observation(
             id=f"OBS-{uuid.uuid4().hex[:6]}",
             site_id=site.id,
-            observed_at=datetime.now(timezone.utc),
+            observed_at=datetime.now(UTC),
             latitude=40.2251,
             longitude=-8.4312,
             water_clarity="turbid",

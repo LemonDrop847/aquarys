@@ -1,10 +1,13 @@
 """Main FastAPI application for AQUARYS."""
 
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from aquarys.api.observations import router as observations_router
+from aquarys.api.sites import router as sites_router
 from aquarys.core.config import settings
 from aquarys.core.database import init_db
 from aquarys.core.logging import logger, setup_logging
@@ -36,6 +39,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount routers
+app.include_router(sites_router)
+app.include_router(observations_router)
 
 
 @app.get("/health", tags=["System"])

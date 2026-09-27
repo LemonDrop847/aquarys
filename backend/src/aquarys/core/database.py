@@ -1,6 +1,7 @@
 """Database connection and session management for AQUARYS."""
 
 from collections.abc import AsyncGenerator
+
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
@@ -29,6 +30,7 @@ async_session_maker = async_sessionmaker(
 
 class Base(DeclarativeBase):
     """Base model class for all SQLAlchemy entities."""
+
     pass
 
 

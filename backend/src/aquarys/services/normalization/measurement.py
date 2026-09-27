@@ -1,10 +1,12 @@
 """Measurement entity normalizer."""
 
-from datetime import datetime, timezone
-from typing import Any, Dict
+from datetime import UTC, datetime
+from typing import Any
 
 
-def normalize_measurement(raw: Dict[str, Any], raw_payload_hash: str | None = None) -> Dict[str, Any]:
+def normalize_measurement(
+    raw: dict[str, Any], raw_payload_hash: str | None = None
+) -> dict[str, Any]:
     """Normalizes raw physical / chemical measurement into canonical schema dict.
 
     Preserves all unmapped / extra fields in metadata_json.
@@ -14,14 +16,16 @@ def normalize_measurement(raw: Dict[str, Any], raw_payload_hash: str | None = No
     mea_id = str(raw_copy.pop("id", raw_copy.pop("measurement_id", "")))
     site_id = str(raw_copy.pop("site_id", ""))
 
-    observed_at_str = raw_copy.pop("observed_at", raw_copy.pop("measured_at", raw_copy.pop("timestamp", None)))
+    observed_at_str = raw_copy.pop(
+        "observed_at", raw_copy.pop("measured_at", raw_copy.pop("timestamp", None))
+    )
     if observed_at_str:
         try:
             observed_at = datetime.fromisoformat(str(observed_at_str).replace("Z", "+00:00"))
         except Exception:
-            observed_at = datetime.now(timezone.utc)
+            observed_at = datetime.now(UTC)
     else:
-        observed_at = datetime.now(timezone.utc)
+        observed_at = datetime.now(UTC)
 
     parameter = str(raw_copy.pop("parameter", raw_copy.pop("param", "unknown")))
     val = raw_copy.pop("value", raw_copy.pop("val", 0.0))
@@ -44,9 +48,9 @@ def normalize_measurement(raw: Dict[str, Any], raw_payload_hash: str | None = No
         try:
             retrieved_at = datetime.fromisoformat(str(retrieved_at_str).replace("Z", "+00:00"))
         except Exception:
-            retrieved_at = datetime.now(timezone.utc)
+            retrieved_at = datetime.now(UTC)
     else:
-        retrieved_at = datetime.now(timezone.utc)
+        retrieved_at = datetime.now(UTC)
 
     processing_version = str(raw_copy.pop("processing_version", "1.0.0"))
 

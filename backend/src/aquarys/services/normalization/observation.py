@@ -1,10 +1,12 @@
 """Observation entity normalizer."""
 
-from datetime import datetime, timezone
-from typing import Any, Dict
+from datetime import UTC, datetime
+from typing import Any
 
 
-def normalize_observation(raw: Dict[str, Any], raw_payload_hash: str | None = None) -> Dict[str, Any]:
+def normalize_observation(
+    raw: dict[str, Any], raw_payload_hash: str | None = None
+) -> dict[str, Any]:
     """Normalizes raw citizen / field observation into canonical schema dict.
 
     Preserves all unmapped / extra fields in metadata_json.
@@ -19,9 +21,9 @@ def normalize_observation(raw: Dict[str, Any], raw_payload_hash: str | None = No
         try:
             observed_at = datetime.fromisoformat(str(observed_at_str).replace("Z", "+00:00"))
         except Exception:
-            observed_at = datetime.now(timezone.utc)
+            observed_at = datetime.now(UTC)
     else:
-        observed_at = datetime.now(timezone.utc)
+        observed_at = datetime.now(UTC)
 
     observer_type = str(raw_copy.pop("observer_type", "citizen"))
     observer_id = raw_copy.pop("observer_id", None)
@@ -62,9 +64,9 @@ def normalize_observation(raw: Dict[str, Any], raw_payload_hash: str | None = No
         try:
             retrieved_at = datetime.fromisoformat(str(retrieved_at_str).replace("Z", "+00:00"))
         except Exception:
-            retrieved_at = datetime.now(timezone.utc)
+            retrieved_at = datetime.now(UTC)
     else:
-        retrieved_at = datetime.now(timezone.utc)
+        retrieved_at = datetime.now(UTC)
 
     processing_version = str(raw_copy.pop("processing_version", "1.0.0"))
 

@@ -34,14 +34,18 @@ def ingest_snapshot():
     service = SnapshotIngestionService()
     results = service.ingest_all_snapshots()
     for entity, res in results.items():
-        print(f"Ingested snapshot '{entity}': {res['count']} items (hash={res['payload_hash'][:8]})")
+        print(
+            f"Ingested snapshot '{entity}': {res['count']} items (hash={res['payload_hash'][:8]})"
+        )
     print("Snapshot ingestion complete.")
 
 
 def main():
     parser = argparse.ArgumentParser(description="AQUARYS Ingestion Script")
     parser.add_argument("--live", action="store_true", help="Ingest from live OAH API")
-    parser.add_argument("--snapshot", action="store_true", help="Ingest from offline snapshots (default)")
+    parser.add_argument(
+        "--snapshot", action="store_true", help="Ingest from offline snapshots (default)"
+    )
     args = parser.parse_args()
 
     if args.live:

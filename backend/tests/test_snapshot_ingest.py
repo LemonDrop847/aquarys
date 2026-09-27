@@ -1,6 +1,7 @@
 """Tests for snapshot ingestion."""
 
 from pathlib import Path
+
 from aquarys.services.ingestion.snapshot import SnapshotIngestionService
 
 

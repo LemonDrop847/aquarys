@@ -1,10 +1,10 @@
 """Site entity normalizer."""
 
-from datetime import datetime, timezone
-from typing import Any, Dict
+from datetime import UTC, datetime
+from typing import Any
 
 
-def normalize_site(raw: Dict[str, Any], raw_payload_hash: str | None = None) -> Dict[str, Any]:
+def normalize_site(raw: dict[str, Any], raw_payload_hash: str | None = None) -> dict[str, Any]:
     """Normalizes raw site data into canonical schema dict.
 
     Preserves all unmapped / extra fields in metadata_json.
@@ -41,9 +41,9 @@ def normalize_site(raw: Dict[str, Any], raw_payload_hash: str | None = None) -> 
         try:
             retrieved_at = datetime.fromisoformat(retrieved_at_str.replace("Z", "+00:00"))
         except Exception:
-            retrieved_at = datetime.now(timezone.utc)
+            retrieved_at = datetime.now(UTC)
     else:
-        retrieved_at = datetime.now(timezone.utc)
+        retrieved_at = datetime.now(UTC)
 
     processing_version = str(raw_copy.pop("processing_version", "1.0.0"))
 

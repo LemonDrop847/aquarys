@@ -1,7 +1,7 @@
 """Tests for resilient OAH ingestion client."""
 
-import pytest
 from pathlib import Path
+
 from aquarys.services.ingestion.client import OAHClient
 
 
