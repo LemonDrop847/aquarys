@@ -3,6 +3,8 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.pytest_cache/
+.venv/
 
 # Database
 *.db
@@ -11,3 +13,7 @@ __pycache__/
 # Alembic
 alembic/versions/*.py
 !alembic/versions/__init__.py
+
+# Raw data
+data/raw/*
+!data/raw/.gitkeep
