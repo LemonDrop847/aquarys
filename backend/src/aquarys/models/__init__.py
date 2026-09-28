@@ -1,15 +1,14 @@
 """SQLAlchemy models for AQUARYS entity definitions."""
 
 import json
-from datetime import UTC, datetime, timezone
-from typing import Any, List, Optional
+from datetime import UTC, datetime
+from typing import Any, Optional
 
 from sqlalchemy import (
     Boolean,
     DateTime,
     Float,
     ForeignKey,
-    Index,
     Integer,
     String,
     Text,

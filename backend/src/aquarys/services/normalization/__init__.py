@@ -1,6 +1,6 @@
 """Canonical normalization service for OAH environmental and citizen data."""
 
-from typing import Any, Dict, List
+from typing import Any
 
 from aquarys.models import EOMeasurement, Measurement, Observation, Site
 from aquarys.services.normalization.eo import normalize_eo_measurement
