@@ -11,6 +11,6 @@ export function useInvestigateOracle() {
 
 export function useChallengeOracle() {
   return useMutation({
-    mutationFn: (investigationId: string) => api.challengeOracle(investigationId)
+    mutationFn: (payload: { hypothesis_id?: string; hypothesis_statement: string; site_id: string; supporting_evidence_ids?: string[] }) => api.challengeOracle(payload)
   });
 }

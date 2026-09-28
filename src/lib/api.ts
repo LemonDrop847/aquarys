@@ -138,10 +138,30 @@ export const api = {
       const res = await fetch(`${API_BASE}/api/trust/evaluate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ observationId })
+        body: JSON.stringify({ observation_id: observationId })
       });
       if (!res.ok) throw new Error("Failed to evaluate trust");
-      return res.json();
+      const data = await res.json();
+
+      // Map EvidenceAssessmentResponse to frontend EvidenceProfile
+      return {
+        observationId: data.observation_id,
+        completeness: Math.round(data.completeness * 100),
+        consistency: Math.round(data.consistency * 100),
+        location: Math.round(data.location_validity * 100),
+        temporalValidity: Math.round(data.temporal_validity * 100),
+        imageSupport: Math.round(data.image_support * 100),
+        crossObserver: Math.round(data.cross_observer * 100),
+        independentSupport: Math.round(data.independent_support * 100),
+        flags: data.flags.map((f: string) => ({
+          metric: f,
+          status: "warning",
+          score: 50
+        })),
+        explanation: data.reasoning || "Verification complete.",
+        warnings: data.negative_signals || [],
+        timestamp: data.evaluated_at
+      };
     } catch {
       return MOCK_EVIDENCE_PROFILE;
     }
@@ -213,53 +233,55 @@ export const api = {
     }
   },
 
-  async challengeOracle(investigationId: string): Promise<{
-    initialConfidence: number;
-    revisedConfidence: number;
-    alternativeHypotheses: string[];
-    criticalCounterEvidence: string[];
-    remainingUncertainties: string[];
+  async challengeOracle(payload: {
+    hypothesis_id?: string;
+    hypothesis_statement: string;
+    site_id: string;
+    supporting_evidence_ids?: string[];
+  }): Promise<{
+    hypothesis_id: string;
+    original_plausibility: number;
+    adjusted_plausibility: number;
+    skeptic_critique: string;
+    identified_counter_evidence: string[];
+    epistemic_weaknesses: string[];
+    suggested_verification_test: string;
   }> {
     if (IS_DEMO) {
       await delay(500);
       return {
-        initialConfidence: 82,
-        revisedConfidence: 68,
-        alternativeHypotheses: [
-          "Mediterranean seasonal drought baseflow reduction accounts for 40% of dissolved oxygen depletion.",
-          "Localized stormwater culvert thermal pulses create intermittent thermal anomalies independent of canopy cover.",
-          "Citizen sampling bias toward accessible sunny banks inflates apparent thermal exposure."
-        ],
-        criticalCounterEvidence: [
+        hypothesis_id: payload.hypothesis_id || "hyp-demo",
+        original_plausibility: 0.82,
+        adjusted_plausibility: 0.68,
+        skeptic_critique: "Mediterranean seasonal drought baseflow reduction accounts for 40% of dissolved oxygen depletion.",
+        identified_counter_evidence: [
           "Upstream shaded station recorded 1.9°C higher temperature than expected during July heatwave.",
           "Storm culvert #4 discharges water at 23.4°C immediately after precipitation events."
         ],
-        remainingUncertainties: [
+        epistemic_weaknesses: [
           "Nutrient loading vs thermal stress relative attribution is unconstrained without 48h spectrophotometry.",
           "Hydraulic retention time during summer baseflow has ±35% model variance."
-        ]
+        ],
+        suggested_verification_test: "Deploy continuous DO loggers above and below storm culvert #4."
       };
     }
     try {
-      const res = await fetch(`${API_BASE}/api/oracle/${investigationId}/challenge`, {
-        method: "POST"
+      const res = await fetch(`${API_BASE}/api/oracle/challenge`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error("Failed to challenge oracle");
       return res.json();
     } catch {
       return {
-        initialConfidence: 82,
-        revisedConfidence: 68,
-        alternativeHypotheses: [
-          "Mediterranean seasonal drought baseflow reduction accounts for 40% of dissolved oxygen depletion.",
-          "Localized stormwater culvert thermal pulses create intermittent thermal anomalies independent of canopy cover."
-        ],
-        criticalCounterEvidence: [
-          "Upstream shaded station recorded 1.9°C higher temperature than expected during July heatwave."
-        ],
-        remainingUncertainties: [
-          "Nutrient loading vs thermal stress relative attribution is unconstrained without 48h spectrophotometry."
-        ]
+        hypothesis_id: payload.hypothesis_id || "hyp-error",
+        original_plausibility: 0.82,
+        adjusted_plausibility: 0.68,
+        skeptic_critique: "Failed to connect to Oracle. Using cached assessment.",
+        identified_counter_evidence: [],
+        epistemic_weaknesses: ["Connection failed."],
+        suggested_verification_test: "Retry connection."
       };
     }
   },
