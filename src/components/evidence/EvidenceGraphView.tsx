@@ -92,7 +92,7 @@ export function EvidenceGraphView({ graph }: EvidenceGraphViewProps) {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeClick={onNodeClick}
-        nodeTypes={{ evidenceNode: CustomEvidenceNode as any }}
+        nodeTypes={{ evidenceNode: CustomEvidenceNode }}
         connectionLineType={ConnectionLineType.SmoothStep}
         fitView
         minZoom={0.2}
@@ -103,7 +103,7 @@ export function EvidenceGraphView({ graph }: EvidenceGraphViewProps) {
         <Controls className="bg-slate-900 border-slate-700 text-slate-300" />
         <MiniMap
           nodeColor={(node) => {
-            const type = (node.data as any)?.type;
+            const type = (node.data as EvidenceNodeData)?.type;
             const colors: Record<string, string> = {
               claim: "#22d3ee",
               observation: "#34d399",

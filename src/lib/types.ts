@@ -19,7 +19,7 @@ export interface Observation {
   siteId: string;
   observedAt: string; // ISO datetime
   type: string; // e.g., "water_quality", "habitat", "citizen_report"
-  value: string | number | Record<string, any>;
+  value: string | number | Record<string, unknown>;
   unit?: string;
   confidence: number; // 0-100
   source: string; // e.g., "oah", "citizen", "eo"
@@ -233,7 +233,7 @@ export interface FHIRBundle {
   type: "collection";
   total: number;
   entry: Array<{
-    resource: Record<string, any>;
+    resource: Record<string, unknown>;
   }>;
   meta?: {
     lastUpdated: string;

@@ -11,7 +11,7 @@ import { ObservationInspector } from "@/components/trust/ObservationInspector";
 import { FHIRExportModal } from "@/components/evidence/FHIRExportModal";
 import { Shield, Sparkles, Filter, Search, ShieldCheck, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { FHIRBundle } from "@/lib/types";
+import { FHIRBundle, EvidenceProfile } from "@/lib/types";
 
 export default function TrustPage() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function TrustPage() {
   const [fhirBundle, setFhirBundle] = useState<FHIRBundle | null>(null);
 
   // Profile data from mutation or fallback
-  const [activeProfile, setActiveProfile] = useState<any>(null);
+  const [activeProfile, setActiveProfile] = useState<EvidenceProfile | null>(null);
 
   const handleSelectObservation = async (obsId: string) => {
     setSelectedObsId(obsId);
@@ -75,9 +75,9 @@ export default function TrustPage() {
   const selectedSite = sites.find((s) => s.id === selectedSiteId) || sites[0];
 
   // Default fallback profile if not yet fetched
-  const displayProfile = activeProfile || {
+  const displayProfile: EvidenceProfile = activeProfile || {
     observationId: currentObs?.id || "obs-101",
-    overallTrust: 92,
+    timestamp: new Date().toISOString(),
     completeness: 100,
     consistency: 94,
     location: 91,
@@ -180,7 +180,7 @@ export default function TrustPage() {
           </label>
           <div className="bg-slate-950/80 border border-slate-800/80 rounded px-2.5 py-1.5 text-emerald-400 font-bold flex items-center justify-between">
             <span>PASSPORT VERIFIED</span>
-            <span>{displayProfile.overallTrust}%</span>
+            <span>{Math.round((displayProfile.completeness + displayProfile.consistency + displayProfile.location) / 3)}%</span>
           </div>
         </div>
       </div>

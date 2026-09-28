@@ -170,7 +170,7 @@ export function FHIRExportModal({
 
                 <div className="space-y-2.5">
                   {bundle.entry?.map((entry, idx) => {
-                    const res = entry.resource;
+                    const res = entry.resource as any;
                     const rType = res.resourceType;
 
                     let icon = <Activity className="h-4 w-4 text-cyan-400" />;
