@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from aquarys.api.observations import router as observations_router
 from aquarys.api.sites import router as sites_router
 from aquarys.api.trust import router as trust_router
+from aquarys.api.twins import router as twins_router
 from aquarys.core.config import settings
 from aquarys.core.database import init_db
 from aquarys.core.logging import logger, setup_logging
@@ -45,6 +46,7 @@ app.add_middleware(
 app.include_router(sites_router)
 app.include_router(observations_router)
 app.include_router(trust_router)
+app.include_router(twins_router)
 
 
 @app.get("/health", tags=["System"])

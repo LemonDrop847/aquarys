@@ -6,7 +6,6 @@ from httpx import ASGITransport, AsyncClient
 from aquarys.main import app
 from aquarys.services.trust.evaluator import EvidenceProfile, evaluate_observation_trust
 
-
 # --- Unit-level: evaluator directly ---
 
 
