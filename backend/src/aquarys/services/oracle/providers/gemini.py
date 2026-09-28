@@ -6,7 +6,6 @@ from typing import Any
 from aquarys.core.config import settings
 from aquarys.services.oracle.providers.base import (
     ChallengeResult,
-    HypothesisResult,
     InvestigationSynthesis,
     LLMProvider,
 )

@@ -1,6 +1,7 @@
 """Integration tests for Evidence Graph, Deterministic Tools, and Grounded Oracle."""
 
 from datetime import UTC, datetime
+
 import pytest
 from httpx import ASGITransport, AsyncClient
 
@@ -138,9 +139,7 @@ async def test_evidence_graph_and_oracle_pipeline():
         assert gain["expected_information_gain"] > 0.30
 
     # Test 3: FastAPI Oracle API Endpoints
-    async with AsyncClient(
-        transport=ASGITransport(app=app), base_url="http://test"
-    ) as ac:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         # Graph API
         g_resp = await ac.get("/evidence/graph/site_oracle_test")
         assert g_resp.status_code == 200

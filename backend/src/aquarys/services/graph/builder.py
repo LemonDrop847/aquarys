@@ -43,15 +43,11 @@ async def build_evidence_graph_for_site(
     observations = list(obs_res.scalars().all())
 
     # 3. Fetch measurements
-    meas_res = await db.execute(
-        select(Measurement).where(Measurement.site_id == site_id)
-    )
+    meas_res = await db.execute(select(Measurement).where(Measurement.site_id == site_id))
     measurements = list(meas_res.scalars().all())
 
     # 4. Fetch EO measurements
-    eo_res = await db.execute(
-        select(EOMeasurement).where(EOMeasurement.site_id == site_id)
-    )
+    eo_res = await db.execute(select(EOMeasurement).where(EOMeasurement.site_id == site_id))
     eo_measurements = list(eo_res.scalars().all())
 
     nodes: list[EvidenceNode] = []
@@ -86,7 +82,8 @@ async def build_evidence_graph_for_site(
             id=obs_node_id,
             node_type="OBSERVATION",
             label=f"Observation {obs.id[:8]} ({obs.water_clarity or 'general'})",
-            description=obs.notes or f"Citizen observation: clarity={obs.water_clarity}, flow={obs.flow_rate_category}, odor={obs.odor}",
+            description=obs.notes
+            or f"Citizen observation: clarity={obs.water_clarity}, flow={obs.flow_rate_category}, odor={obs.odor}",
             confidence=conf,
             source_reference=f"observations/{obs.id}",
             properties={
@@ -189,7 +186,6 @@ async def build_evidence_graph_for_site(
         )
 
     # 5. Cross-modal Relationship Inference (Supports / Contradicts / Correlates)
-    edge_count = len(edges)
     for obs in observations:
         obs_node_id = f"node:obs:{obs.id}"
 

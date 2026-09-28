@@ -1,7 +1,7 @@
 """Oracle investigation engine executing multi-step evidence-grounded synthesis."""
 
-from datetime import UTC, datetime
 import uuid
+from datetime import UTC, datetime
 from typing import Any
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -34,46 +34,58 @@ async def run_investigation(
     activity_events: list[dict[str, Any]] = []
 
     # Step 1: Fetch Site Profile
-    activity_events.append({
-        "timestamp": _now(),
-        "tool": "tool_get_site_profile",
-        "description": f"Extracting 9-dimensional ecological fingerprint for site {request.site_id}",
-    })
+    activity_events.append(
+        {
+            "timestamp": _now(),
+            "tool": "tool_get_site_profile",
+            "description": f"Extracting 9-dimensional ecological fingerprint for site {request.site_id}",
+        }
+    )
     site_profile = await tool_get_site_profile(db, request.site_id)
     if not site_profile:
         site_profile = {"site_id": request.site_id, "water_quality_score": 50.0}
 
     # Step 2: Fetch Observations & Timeline
-    activity_events.append({
-        "timestamp": _now(),
-        "tool": "tool_get_observations",
-        "description": f"Gathering citizen observations and sensor measurements for site {request.site_id}",
-    })
+    activity_events.append(
+        {
+            "timestamp": _now(),
+            "tool": "tool_get_observations",
+            "description": f"Gathering citizen observations and sensor measurements for site {request.site_id}",
+        }
+    )
     observations = await tool_get_observations(db, request.site_id, limit=10)
     timeline = await tool_get_site_timeline(db, request.site_id)
+    site_profile["observations"] = observations
+    site_profile["timeline"] = timeline
 
     # Step 3: Extract Relational Evidence Graph (Supports / Contradictions)
-    activity_events.append({
-        "timestamp": _now(),
-        "tool": "tool_get_evidence",
-        "description": "Constructing relational knowledge graph and detecting cross-modal contradictions",
-    })
+    activity_events.append(
+        {
+            "timestamp": _now(),
+            "tool": "tool_get_evidence",
+            "description": "Constructing relational knowledge graph and detecting cross-modal contradictions",
+        }
+    )
     evidence_graph = await tool_get_evidence(db, request.site_id)
 
     # Step 4: Query Ecological Twins for Comparative Context
-    activity_events.append({
-        "timestamp": _now(),
-        "tool": "tool_find_similar_sites",
-        "description": "Scanning vector space for comparative ecological twin catchments",
-    })
+    activity_events.append(
+        {
+            "timestamp": _now(),
+            "tool": "tool_find_similar_sites",
+            "description": "Scanning vector space for comparative ecological twin catchments",
+        }
+    )
     twins = await tool_find_similar_sites(db, request.site_id, limit=3)
 
     # Step 5: Provider Reasoning & Epistemic Synthesis
-    activity_events.append({
-        "timestamp": _now(),
-        "tool": "llm_provider.synthesize_investigation",
-        "description": f"Synthesizing findings and hypotheses via {request.provider or 'configured'} provider",
-    })
+    activity_events.append(
+        {
+            "timestamp": _now(),
+            "tool": "llm_provider.synthesize_investigation",
+            "description": f"Synthesizing findings and hypotheses via {request.provider or 'configured'} provider",
+        }
+    )
     provider = get_llm_provider(request.provider)
     synthesis = await provider.synthesize_investigation(
         site_context=site_profile,

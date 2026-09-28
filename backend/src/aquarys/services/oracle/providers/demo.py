@@ -34,9 +34,13 @@ class DemoProvider(LLMProvider):
             f"Relational Evidence Graph constructed with {evidence_graph.get('node_count', 0)} nodes and {evidence_graph.get('edge_count', 0)} edges.",
         ]
         if contradictions:
-            facts.append(f"Detected {len(contradictions)} conflicting signal(s) between visual citizen reports and analytical sensor data.")
+            facts.append(
+                f"Detected {len(contradictions)} conflicting signal(s) between visual citizen reports and analytical sensor data."
+            )
         if supports:
-            facts.append(f"Corroborated {len(supports)} multi-modal observation and satellite telemetry links.")
+            facts.append(
+                f"Corroborated {len(supports)} multi-modal observation and satellite telemetry links."
+            )
 
         # Grounded Hypotheses
         hypotheses = []
@@ -77,20 +81,24 @@ class DemoProvider(LLMProvider):
         dim_status = site_context.get("dimension_status", {})
         for dim, status in dim_status.items():
             if status in ["missing", "estimated"]:
-                data_gaps.append({
-                    "dimension": dim,
-                    "status": status,
-                    "severity": "HIGH" if status == "missing" else "MEDIUM",
-                    "recommendation": f"Deploy targeted citizen mission to sample ground truth for {dim.replace('_', ' ')}.",
-                })
+                data_gaps.append(
+                    {
+                        "dimension": dim,
+                        "status": status,
+                        "severity": "HIGH" if status == "missing" else "MEDIUM",
+                        "recommendation": f"Deploy targeted citizen mission to sample ground truth for {dim.replace('_', ' ')}.",
+                    }
+                )
 
         if not data_gaps:
-            data_gaps.append({
-                "dimension": "macroinvertebrates",
-                "status": "missing",
-                "severity": "MEDIUM",
-                "recommendation": "Perform biological BMWP / ASPT kick-sampling to confirm long-term ecological integrity.",
-            })
+            data_gaps.append(
+                {
+                    "dimension": "macroinvertebrates",
+                    "status": "missing",
+                    "severity": "MEDIUM",
+                    "recommendation": "Perform biological BMWP / ASPT kick-sampling to confirm long-term ecological integrity.",
+                }
+            )
 
         # Next Observations
         next_observations = [
@@ -120,7 +128,9 @@ class DemoProvider(LLMProvider):
             f"and challenged by {len(contradictions)} telemetry anomalies."
         )
 
-        evidence_ids = [e.get("edge_id", f"edge_{i}") for i, e in enumerate(supports + contradictions)]
+        evidence_ids = [
+            e.get("edge_id", f"edge_{i}") for i, e in enumerate(supports + contradictions)
+        ]
 
         return InvestigationSynthesis(
             finding=finding,

@@ -209,7 +209,9 @@ async def tool_find_similar_sites(
     min_similarity: float = 0.5,
 ) -> list[dict[str, Any]]:
     """Search for ecological twin sites."""
-    twins = await search_twins(db, target_site_id=site_id, limit=limit, min_similarity=min_similarity)
+    twins = await search_twins(
+        db, target_site_id=site_id, limit=limit, min_similarity=min_similarity
+    )
     return [
         {
             "twin_site_id": t.site_b_id,
@@ -229,8 +231,12 @@ async def tool_compare_sites(
     site_b_id: str,
 ) -> dict[str, Any] | None:
     """Perform side-by-side differential analysis of two stream sites."""
-    p_a = (await db.execute(select(StreamProfile).where(StreamProfile.site_id == site_a_id))).scalar_one_or_none()
-    p_b = (await db.execute(select(StreamProfile).where(StreamProfile.site_id == site_b_id))).scalar_one_or_none()
+    p_a = (
+        await db.execute(select(StreamProfile).where(StreamProfile.site_id == site_a_id))
+    ).scalar_one_or_none()
+    p_b = (
+        await db.execute(select(StreamProfile).where(StreamProfile.site_id == site_b_id))
+    ).scalar_one_or_none()
     if not p_a or not p_b:
         return None
 
@@ -306,11 +312,13 @@ async def tool_find_corroborating_evidence(
     obs_node_id = f"node:obs:{obs.id}"
 
     supporting = [
-        e.reason for e in graph["edges"]
+        e.reason
+        for e in graph["edges"]
         if e.source_node_id == obs_node_id and e.edge_type == "supports"
     ]
     contradicting = [
-        e.reason for e in graph["edges"]
+        e.reason
+        for e in graph["edges"]
         if e.source_node_id == obs_node_id and e.edge_type == "contradicts"
     ]
 
@@ -335,29 +343,35 @@ async def tool_get_interventions(
 
     interventions = []
     if (profile.vegetation_score or 100) < 60:
-        interventions.append({
-            "type": "riparian_buffer",
-            "title": "Native Riparian Buffer Planting",
-            "description": "Establish a 15m native buffer zone with Alnus glutinosa and Salix alba to reduce thermal stress and filter runoff.",
-            "target_dimension": "vegetation_score",
-            "expected_gain": "+25 points",
-        })
+        interventions.append(
+            {
+                "type": "riparian_buffer",
+                "title": "Native Riparian Buffer Planting",
+                "description": "Establish a 15m native buffer zone with Alnus glutinosa and Salix alba to reduce thermal stress and filter runoff.",
+                "target_dimension": "vegetation_score",
+                "expected_gain": "+25 points",
+            }
+        )
     if (profile.water_quality_score or 100) < 60:
-        interventions.append({
-            "type": "stormwater_wetland",
-            "title": "Constructed Stormwater Bio-Retention Swale",
-            "description": "Install bio-filtration cells upstream to intercept nutrient surges and reduce turbidity spikes.",
-            "target_dimension": "water_quality_score",
-            "expected_gain": "+30 points",
-        })
+        interventions.append(
+            {
+                "type": "stormwater_wetland",
+                "title": "Constructed Stormwater Bio-Retention Swale",
+                "description": "Install bio-filtration cells upstream to intercept nutrient surges and reduce turbidity spikes.",
+                "target_dimension": "water_quality_score",
+                "expected_gain": "+30 points",
+            }
+        )
     if (profile.hydromorphology_score or 100) < 60:
-        interventions.append({
-            "type": "large_woody_debris",
-            "title": "In-Stream Deflector & Woody Debris Installation",
-            "description": "Place structured wood elements to create pool-riffle sequences and oxygenate slow-moving reaches.",
-            "target_dimension": "hydromorphology_score",
-            "expected_gain": "+20 points",
-        })
+        interventions.append(
+            {
+                "type": "large_woody_debris",
+                "title": "In-Stream Deflector & Woody Debris Installation",
+                "description": "Place structured wood elements to create pool-riffle sequences and oxygenate slow-moving reaches.",
+                "target_dimension": "hydromorphology_score",
+                "expected_gain": "+20 points",
+            }
+        )
     return interventions
 
 
@@ -371,7 +385,9 @@ async def tool_calculate_information_gain(
     profile = p_res.scalar_one_or_none()
 
     curr_cov = profile.data_coverage_pct if profile else 0.0
-    dim_status = profile.dimension_status.get(proposed_dimension, "missing") if profile else "missing"
+    dim_status = (
+        profile.dimension_status.get(proposed_dimension, "missing") if profile else "missing"
+    )
 
     if dim_status == "missing":
         gain = 0.35

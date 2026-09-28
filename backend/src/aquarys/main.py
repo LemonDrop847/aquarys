@@ -6,7 +6,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from aquarys.api.exports import router as exports_router
 from aquarys.api.graph import router as graph_router
+from aquarys.api.missions import router as missions_router
 from aquarys.api.observations import router as observations_router
 from aquarys.api.oracle import router as oracle_router
 from aquarys.api.sites import router as sites_router
@@ -51,6 +53,8 @@ app.include_router(trust_router)
 app.include_router(twins_router)
 app.include_router(graph_router)
 app.include_router(oracle_router)
+app.include_router(missions_router)
+app.include_router(exports_router)
 
 
 @app.get("/health", tags=["System"])
