@@ -21,6 +21,23 @@ interface FHIRExportModalProps {
   title?: string;
 }
 
+interface FHIRResource {
+  resourceType?: string;
+  name?: string;
+  id?: string;
+  status?: string;
+  effectiveDateTime?: string;
+  code?: { text?: string };
+  position?: { latitude?: number; longitude?: number };
+  valueQuantity?: { value?: number; unit?: string };
+  prediction?: Array<{
+    outcome?: { text?: string };
+    probabilityDecimal?: number;
+    rationale?: string;
+  }>;
+  [key: string]: unknown;
+}
+
 export function FHIRExportModal({
   bundle,
   isOpen,
@@ -170,8 +187,8 @@ export function FHIRExportModal({
 
                 <div className="space-y-2.5">
                   {bundle.entry?.map((entry, idx) => {
-                    const res = entry.resource as any;
-                    const rType = res.resourceType;
+                    const res = entry.resource as FHIRResource;
+                    const rType = res.resourceType || "Unknown";
 
                     let icon = <Activity className="h-4 w-4 text-cyan-400" />;
                     let badgeColor = "bg-cyan-950 border-cyan-800 text-cyan-400";
@@ -207,8 +224,8 @@ export function FHIRExportModal({
                         <div className="text-xs text-slate-400 space-y-1 pt-1 border-t border-slate-900">
                           {rType === "Location" && (
                             <div className="flex items-center justify-between text-[11px]">
-                              <span>Coordinates: {res.position?.latitude}°, {res.position?.longitude}°</span>
-                              <span className="text-emerald-400">Status: {res.status}</span>
+                              <span>Coordinates: {(res.position as {latitude?: number})?.latitude}°, {(res.position as {longitude?: number})?.longitude}°</span>
+                              <span className="text-emerald-400">Status: {(res.status as string) || "—"}</span>
                             </div>
                           )}
                           {rType === "Observation" && (
@@ -217,14 +234,14 @@ export function FHIRExportModal({
                                 Value: {res.valueQuantity?.value} {res.valueQuantity?.unit}
                               </span>
                               <span className="text-cyan-400">
-                                Date: {new Date(res.effectiveDateTime).toLocaleDateString()}
+                                Date: {res.effectiveDateTime ? new Date(res.effectiveDateTime).toLocaleDateString() : "—"}
                               </span>
                             </div>
                           )}
                           {rType === "RiskAssessment" && (
                             <div className="text-[11px]">
                               <p className="text-slate-300">
-                                {res.prediction?.[0]?.outcome?.text}: {(res.prediction?.[0]?.probabilityDecimal * 100).toFixed(0)}%
+                                {res.prediction?.[0]?.outcome?.text}: {((res.prediction?.[0]?.probabilityDecimal || 0) * 100).toFixed(0)}%
                               </p>
                               <p className="text-[10px] text-slate-500 mt-0.5">
                                 {res.prediction?.[0]?.rationale}

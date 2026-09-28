@@ -28,6 +28,11 @@ export function TwinSearchAnimation({
   useEffect(() => {
     if (!isSearching) {
       setCurrentStep(0);
+    }
+  }, [isSearching]);
+
+  useEffect(() => {
+    if (!isSearching) {
       return;
     }
 
