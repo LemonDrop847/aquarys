@@ -1,0 +1,6 @@
+{
+  "service": "OneAquaHealth",
+  "base_url": "https://api.enora-oah.eu",
+  "endpoints": [],
+  "status": "unverified"
+}
