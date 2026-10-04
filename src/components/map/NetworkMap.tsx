@@ -32,24 +32,23 @@ export function NetworkMap({
         style: {
           version: 8,
           sources: {
-            "carto-dark": {
+            "osm": {
               type: "raster",
               tiles: [
-                "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-                "https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-                "https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-                "https://d.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
+                "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                "https://d.tile.openstreetmap.org/{z}/{x}/{y}.png",
               ],
               tileSize: 256,
-              attribution:
-                '&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',
+              attribution: "© OpenStreetMap contributors",
             },
           },
           layers: [
             {
-              id: "carto-dark-layer",
+              id: "osm-layer",
               type: "raster",
-              source: "carto-dark",
+              source: "osm",
               minzoom: 0,
               maxzoom: 19,
             },
